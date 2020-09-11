@@ -15,4 +15,8 @@ $router->get('/', function () use ($router) {
     return $router->app->version();
 });
 
-$router->get('items','ItemController@getItemsPagination');
+#item routes
+$router->get('items', 'ItemController@getItemsPagination');
+
+#cart routes
+$router->post('addItemCart', 'CartController@addItemCart');
