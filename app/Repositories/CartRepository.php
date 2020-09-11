@@ -21,16 +21,35 @@ class CartRepository implements CartRepositoryInterface
 
     public function addUserItem(Request $request)
     {
-        return $this->cart->create($request->all());
+        /*use updateOrCreate to prevent duplicate same item for the same customer
+         and update the quantity of cart item*/
+        return $this->cart->updateOrCreate(
+            ['item_id' => $request->item_id, 'customer_id' => $request->customer_id],
+            ['quantity' => $request->quantity]
+        );
+    }
+
+    public function removeUserItem(Request $request)
+    {
+        return $this->cart->where([['item_id', '=', $request->item_id],
+            ['customer_id', '=', $request->customer_id]])->first()->delete();
     }
 
     #validation part
-    public function addCartItemValidation(Request $request)
+    public function addOrUpdateCartItemValidation(Request $request)
     {
         return $this->apiValidation($request, [
             'item_id' => 'required|numeric',
             'customer_id' => 'required|numeric',
-            'quantity' => 'required|numeric',
+            'quantity' => 'required|numeric|gt:0',
+        ]);
+    }
+
+    public function removeCartItemValidation(Request $request)
+    {
+        return $this->apiValidation($request, [
+            'item_id' => 'required|numeric',
+            'customer_id' => 'required|numeric',
         ]);
     }
 

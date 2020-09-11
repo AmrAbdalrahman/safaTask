@@ -15,8 +15,21 @@ $router->get('/', function () use ($router) {
     return $router->app->version();
 });
 
+$router->group(['prefix' => 'api'], function () use ($router) {
+
 #item routes
-$router->get('items', 'ItemController@getItemsPagination');
+    $router->group(['prefix' => 'items'], function () use ($router) {
+        $router->get('/', 'ItemController@getItemsPagination');
+    });
+
 
 #cart routes
-$router->post('addItemCart', 'CartController@addItemCart');
+    $router->group(['prefix' => 'cart'], function () use ($router) {
+        $router->post('addOrUpdateItem', 'CartController@addItemCart');
+        $router->post('removeItem', 'CartController@removeItemCart');
+    });
+
+});
+
+
+
