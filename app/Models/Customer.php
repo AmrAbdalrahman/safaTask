@@ -31,4 +31,16 @@ class Customer extends Model implements AuthenticatableContract, AuthorizableCon
     protected $hidden = [
         'password',
     ];
+
+    public function cart()
+    {
+        return $this->hasMany('App\Models\Cart', 'customer_id');
+    }
+
+    public function getTotalPurchase()
+    {
+        return $this->cart->sum(function ($detail) {
+            return $detail->item->price * $detail->quantity;
+        });
+    }
 }

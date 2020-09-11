@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Resources\CartResource;
 use App\Repositories\CartRepository;
 use Illuminate\Http\Request;
 
@@ -39,6 +40,16 @@ class CartController extends Controller
             return $this->apiResponse("item removed from cart successfully");
         }
         return $this->notFoundResponse("no item in cart for user to delete");
+    }
+
+    public function userCheckout($customer_id)
+    {
+        $items = $this->cartRepository->getUserCheckout($customer_id);
+        if (count($items) > 0) {
+            return $this->apiResponse(CartResource::collection($items));
+        }
+        return $this->notFoundResponse('no items found for checkout');
+
     }
 
 }

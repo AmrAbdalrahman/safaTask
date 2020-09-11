@@ -35,6 +35,11 @@ class CartRepository implements CartRepositoryInterface
             ['customer_id', '=', $request->customer_id]])->first()->delete();
     }
 
+    public function getUserCheckout($customer_id)
+    {
+        return $this->cart->where('customer_id', $customer_id)->get();
+    }
+
     #validation part
     public function addOrUpdateCartItemValidation(Request $request)
     {

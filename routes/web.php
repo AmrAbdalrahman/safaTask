@@ -27,6 +27,7 @@ $router->group(['prefix' => 'api'], function () use ($router) {
     $router->group(['prefix' => 'cart'], function () use ($router) {
         $router->post('addOrUpdateItem', 'CartController@addItemCart');
         $router->post('removeItem', 'CartController@removeItemCart');
+        $router->get('checkout/{customer_id}', 'CartController@userCheckout');
     });
 
 });
