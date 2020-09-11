@@ -11,9 +11,20 @@
 |
 */
 
-$factory->define(App\User::class, function (Faker\Generator $faker) {
+$factory->define(App\Models\Customer::class, function (Faker\Generator $faker) {
     return [
-        'name' => $faker->name,
         'email' => $faker->email,
+        'first_name' => $faker->name,
+        'last_name' => $faker->name,
+        'store_credit' => $faker->randomNumber($nbDigits = 4),
     ];
 });
+
+$factory->define(App\Models\Item::class, function (Faker\Generator $faker) {
+    return [
+        'name' => $faker->name,
+        'description' => $faker->text,
+        'price' => $faker->randomNumber($nbDigits = 3),
+    ];
+});
+
