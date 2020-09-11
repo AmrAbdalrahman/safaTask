@@ -17,17 +17,23 @@ $router->get('/', function () use ($router) {
 
 $router->group(['prefix' => 'api'], function () use ($router) {
 
-#item routes
+    #item routes
     $router->group(['prefix' => 'items'], function () use ($router) {
         $router->get('/', 'ItemController@getItemsPagination');
     });
 
 
-#cart routes
+    #cart routes
     $router->group(['prefix' => 'cart'], function () use ($router) {
         $router->post('addOrUpdateItem', 'CartController@addItemCart');
         $router->post('removeItem', 'CartController@removeItemCart');
         $router->get('checkout/{customer_id}', 'CartController@userCheckout');
+    });
+
+    #order routes
+    $router->group(['prefix' => 'order'], function () use ($router) {
+        $router->get('TotalPurchase/{customer_id}', 'OrderController@TotalPurchase');
+        $router->post('make', 'OrderController@makeOrder');
     });
 
 });

@@ -10,7 +10,7 @@ interface CartRepositoryInterface
 
     public function removeUserItem(Request $request);
 
-    public function getUserCheckout($user_id);
+    public function getUserCheckout($customer_id);
 
     #validation part
     public function addOrUpdateCartItemValidation(Request $request);
