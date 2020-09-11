@@ -20,7 +20,7 @@ class Customer extends Model implements AuthenticatableContract, AuthorizableCon
      * @var array
      */
     protected $fillable = [
-        'name', 'email',
+        'email', 'first_name', 'last_name', 'store_credit'
     ];
 
     /**
@@ -37,6 +37,7 @@ class Customer extends Model implements AuthenticatableContract, AuthorizableCon
         return $this->hasMany('App\Models\Cart', 'customer_id');
     }
 
+    //calculate total price of purchase
     public function getTotalPurchase()
     {
         return $this->cart->sum(function ($detail) {

@@ -23,7 +23,7 @@ class CartController extends Controller
             return $validation;
         }
 
-        if ($this->cartRepository->addUserItem($request)) {
+        if ($this->cartRepository->addOrUpdateCustomerItem($request)) {
             return $this->apiResponse("item added to cart successfully");
         }
         return $this->unKnowError("Error while saving the item to cart");
@@ -36,7 +36,7 @@ class CartController extends Controller
             return $validation;
         }
 
-        if ($this->cartRepository->removeUserItem($request)) {
+        if ($this->cartRepository->removeCustomerItem($request)) {
             return $this->apiResponse("item removed from cart successfully");
         }
         return $this->notFoundResponse("no item in cart for user to delete");
@@ -44,7 +44,7 @@ class CartController extends Controller
 
     public function userCheckout($customer_id)
     {
-        $items = $this->cartRepository->getUserCheckout($customer_id);
+        $items = $this->cartRepository->getCustomerCheckout($customer_id);
         if (count($items) > 0) {
             return $this->apiResponse(CartResource::collection($items));
         }

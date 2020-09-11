@@ -6,11 +6,13 @@ use Illuminate\Http\Request;
 
 interface CartRepositoryInterface
 {
-    public function addUserItem(Request $request);
+    public function addOrUpdateCustomerItem(Request $request);
 
-    public function removeUserItem(Request $request);
+    public function removeCustomerItem(Request $request);
 
-    public function getUserCheckout($customer_id);
+    public function getCustomerCheckout($customerId);
+
+    public function resetCustomerCart($customerId);
 
     #validation part
     public function addOrUpdateCartItemValidation(Request $request);

@@ -19,7 +19,7 @@ class CartRepository implements CartRepositoryInterface
         $this->cart = $cart;
     }
 
-    public function addUserItem(Request $request)
+    public function addOrUpdateCustomerItem(Request $request)
     {
         /*use updateOrCreate to prevent duplicate same item for the same customer
          and update the quantity of cart item*/
@@ -29,15 +29,20 @@ class CartRepository implements CartRepositoryInterface
         );
     }
 
-    public function removeUserItem(Request $request)
+    public function removeCustomerItem(Request $request)
     {
         return $this->cart->where([['item_id', '=', $request->item_id],
             ['customer_id', '=', $request->customer_id]])->first()->delete();
     }
 
-    public function getUserCheckout($customer_id)
+    public function getCustomerCheckout($customerId)
     {
-        return $this->cart->where('customer_id', $customer_id)->get();
+        return $this->cart->where('customer_id', $customerId)->get();
+    }
+
+    public function resetCustomerCart($customerId)
+    {
+        return $this->cart->where('customer_id', $customerId)->delete();
     }
 
     #validation part
